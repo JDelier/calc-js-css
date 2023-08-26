@@ -1,81 +1,197 @@
 // variables
+var num1 = "";
+var num2 = "";
+var operations = "";
+var ciclo = 0;
+var MEMORY = 0;
+// items from HTML
 
-let num1 = "";
-let num2 = "";
-let operations = "";
+const visor = document.querySelector(".visor");
+const buttons = document.querySelectorAll(".btn");
+const equals = document.querySelector('.equals')
+
+const objOperatorsFunctions = {
+  "+": "soma",
+ "-": "subtracao",
+ "/": "divisao",
+ "X": "multiplicacao",
+ "%": "porcentagem",
+ "raizQ": "raizQuadrada"  
+ }
+
+const calculatorSpecials = {
+  "MR": "Memory Recall",
+  "MC":"Mememory Clear" ,
+  "MS":"Mememory Clear",
+  "M+": "Memory Add" ,
+}
 
 // capturando todos os botoes
 
-const buttons = document.querySelectorAll(".btn");
+buttons.forEach((button) => button.addEventListener("click", clickF));
+function clickF(e) {
+  
+  let textoInternoBotao = e.target.innerText;
+  let inputIsNaN= isNaN(parseInt(textoInternoBotao));
+  let equals = (textoInternoBotao == "=")
 
-console.log(buttons);
 
-buttons.forEach((button) => button.addEventListener("click", key));
-
-// Visor
-
-const visor = document.querySelector(".visor");
-
-visor.addEventListener("click", () => {
-  console.log("sexo");
-});
-
-// window [keyBoard]
-
-window.addEventListener("keypress", conta);
-
-function conta(e) {
-  if (!isNaN(e.key) || e.key == ".") {
-    if (operations == "") {
-      num1 = num1 + e.key;
-      atualizaVisor(e.key);
+  // enquanto for NUMERO, ou . (simbolo usado em numeros reais)
+  if ((!inputIsNaN || textoInternoBotao == ".")){
+    // captura primeiro numero, se o ciclo n for 0, captura segundo numero;
+    if (ciclo == 0) {
+      num1 += textoInternoBotao;
+      atualizaVisor(textoInternoBotao);
     } else {
-      num2 += e.key;
-      atualizaVisor(e.key);
+      num2 += textoInternoBotao;
+      atualizaVisor(textoInternoBotao);
+    }           // qualifica operador
+  } else if (objOperatorsFunctions[textoInternoBotao]) {
+    atualizaVisor(textoInternoBotao);
+    operations += textoInternoBotao;
+    ciclo = 1;
+  } else if (equals) {
+    let resultAtual = calcular(num1, num2, operations)
+    num1 = resultAtual;
+    num2 = ""
+    operations = ""
+    apagaVisor()
+    atualizaVisor(resultAtual)
     }
-  } else if (e.key == "+" || e.key == "-" || e.key == "/" || e.key == "*") {
-    operations += e.key;
-    atualizaVisor(e.key);
-  } else if (e.key == "=" || e.key == "Enter") {
-    if (num1 != "" && num2 != "" && operations != "") {
-      apagaVisor();
-      let result = calcula(num1, num2, operations);
-      atualizaVisor(result);
-      num1 = "";
-      num2 = "";
-      operations = "";
+    else if (textoInternoBotao == "AC")
+    {
+      apagaVisor()
+      resetInputs()
     }
-  }
-  console.log(num1, num2, operations);
+
+    else if (calculatorSpecials[textoInternoBotao])
+    { 
+      
+      if(MEMORY != 0 && calculatorSpecials[textoInternoBotao] )
+      {
+        atualizaVisor(MEMORY)
+      }
+    
+      apagaVisor()
+      MEMORY += calcularMemoria(num1,num2,textoInternoBotao,MEMORY)
+      atualizaVisor("");
+      num1 = ""
+      num2 = ""
+      operations = ""
+      ciclo = 0;
+      
+    }
+
 }
+
+// botao de calcular
+
+
+
+
 
 function atualizaVisor(value) {
-  visor.innerText += value;
+  visor.innerText += value
 }
+
 function apagaVisor() {
   visor.innerText = "";
 }
+// window [keyBoard] Funcionalidades do teclado
+window.addEventListener("keypress", keyBoardF);
 
-function key() {
-  if (this.innerText == "1") {
-    console.log(parseInt(1));
+function keyBoardF(e) {
+  
+  let tecla = e.key
+  let equalsKey = tecla == "=" || tecla == "Enter"
+
+  if (!isNaN(tecla) || tecla == ".") {
+    if (ciclo == 0) {
+      num1 += tecla;
+      atualizaVisor(tecla);
+    } else {
+      num2 += tecla;
+      atualizaVisor(tecla);
+    }
+  } else if (objOperatorsFunctions[tecla]) {
+    operations += tecla;
+    atualizaVisor(tecla);
+    ciclo = 1;
+  } else if (equalsKey) {
+    let resultAtual = calcular(num1, num2, operations)
+    num1 = resultAtual;
+    num2 = ""
+    operations = ""
+    apagaVisor()
+    atualizaVisor(resultAtual)  
+
+  } else if (tecla = "f")  {
+    resetInputs()
+    apagaVisor()
+
   }
 }
 
-function calcula(a, b, operation) {
-  let x = parseInt(a);
-  let y = parseInt(b);
+function calcular(a, b, operation)
+{  
+  let result = 0;
+    switch(operation) {
+      case '+' : 
+        return result = Number(a) + Number(b);
+        
+      case '-':
+      return result = Number(a) - Number(b);
+        
+      case 'X':
+       return result = Number(a) * Number(b);
+        
+      case '/':
+        return result = Number(a) / Number(b);
+        
+      case '%': 
+      let expr1 = Number(a);
+      let expr2 = (Number(b) / expr1 ) * 100;
+      return result = expr1 + expr2;
+      
+      case 'raizQ':
+        return result = Math.sqrt(Number(a));
+    
+      default:
+        return 'error'
+    }
+}
 
-  switch (operation) {
-    case "+":
-      return x + y;
-    case "-":
-      return x - y;
-    case "/":
-      return x / y;
-    case "*":
-      return x * y;
-    default:
-      return "ERROR";
-  }
+function calcularMemoria(a,b, operation, memoria)
+{
+  switch(operation){
+
+      case 'MS':
+        memoria = Number(a);
+        return memoria;
+      case 'M+':
+        memoria = Number(a) + Number(b);
+        return memoria;
+      case 'M-':
+        memoria = Number(a) - Number(b)
+        return memoria;
+      case 'MC': 
+      memoria = 0
+      return memoria
+      case 'MR':
+        atualizaVisor(memoria)
+        break;
+      default: 
+      return 'oi'
+    }
+}
+
+
+function resetInputs()
+{
+  num1 = "";
+  num2 = "";
+  operations = "";
+  ciclo = 0;
+  reminder = 0;
+  MEMORY_STORAGE = 0;
 }
