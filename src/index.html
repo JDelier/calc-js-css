@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calc</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link href="../src/style/dist/output.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-cyan-600 to-blue-700">  
+<main class=""> 
+        <div class="calculadora  bg-gray-900">
+        <div class="calc__parteSuperior">
+            <div class="calc_header padding-1">
+                <div class="flex flex-row align-middle border gap-3">
+                    <span class="text-center font-bold  text-white">CALC</span>
+                    <p>101</p>
+                </div>
+                <p class="digits">12 digits</p>
+                <div class="retangulo flex flex-row">
+                    <div class="w-6 h-9 bg-slate-400 border-r"></div>
+                    <div class="w-6 h-9 bg-slate-400 border-r"></div>
+                    <div class="w-6 h-9 bg-slate-400 border-r"></div>
+                    <div class="w-6 h-9 bg-slate-400"></div>
+                </div>
+            </div>
+            <div class=" visor  bg-gray-50">
+                <div class="w-96 h-24 bg-green-900 opacity-70">
+                    <span class="output paddin"></span></div>
+            </div>
+        </div>
+        <div class="divisor__meio"></div>
+        <div class="parte__inferior">
+            <div class="grid grid-cols-6 grid-rows-6 gap-3 text-white">
+                <button class="btn col-span-2">#</button>
+                <button class="btn col-span-2"> #</button>
+                <button class="btn "> #</button>
+                <button class="btn"> #</button>
+                <button class="btn bg-gray-400"> MC</button>
+                <button class="btn bg-gray-400"> MR</button>
+                <button class="btn bg-gray-400"> M-</button>
+                <button class="btn bg-gray-400"> M+</button>
+                <button class="btn bg-gray-400"> MU</button>
+                <button class="btn bg-gray-400">MS</button>
+                <button class="btn bg-gray-400"> OFF</button>
+                <button class="btn bg-black" value="7"> 7</button>
+                <button class="btn bg-black" value="8"> 8</button>
+                <button class="btn bg-black" value="9"> 9</button>
+                <button class="btn bg-gray-400"> %</button>
+                <button class="btn bg-gray-400">raizQ</button>
+                <button class="btn bg-gray-400">AC</button>
+                <button class="btn bg-black" value="4"> 4</button>
+                <button class="btn bg-black" value="5"> 5</button>
+                <button class="btn bg-black" value="6"> 6</button>
+                <button class="btn bg-gray-400">X</button>
+                <button class="btn bg-gray-400">/</button>
+                <button class="btn bg-red-500"> CE</button>
+                <button class="btn bg-black" value="1"> 1</button>
+                <button class="btn bg-black" value="2"> 2</button>
+                <button class="btn bg-black" value="3"> 3</button>
+                <button class="btn  bg-gray-400 row-span-2 row-start 5 col-start-5">+</button>
+                <button class="btn bg-gray-400">-</button>
+                <button class="btn bg-red-500"> ON/C</button>
+                <button class="btn bg-black" value="0"> 0</button>
+                <button class="btn bg-black">00</button>
+                <button class="btn bg-black">.</button>
+                <button class="btn bg-gray-400 equals">=</button>
+            </div>
+        </div>
+        </div>
+
+        
+        
+</main>
+    
+<script type="module" src="./app/index.js"></script>
+</body>
+</html>
